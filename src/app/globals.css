@@ -1,0 +1,21 @@
+/* src/app/globals.css */
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg: #030F1E;
+  --color-brand-deep-gold: #C5A86B;
+  --color-brand-light-gold: #EEDCA5;
+  --color-brand-deep-teal: #0E434D;
+  --color-brand-turquoise: #3A9FA3;
+  --color-brand-platinum: #8C867E;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-brand-bg);
+  color: #f8fafc;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
