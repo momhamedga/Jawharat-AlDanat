@@ -1,14 +1,23 @@
 // src/components/layout/Footer.tsx
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link'; // استيراد المكون الحديث لـ Next.js
 
-export default function Footer() {
+interface FooterProps {
+  locale?: string;
+}
+
+export default function Footer({ locale }: FooterProps) {
   const currentYear = new Date().getFullYear();
+
+  // تحديد مسار الروابط بناءً على الـ locale الحالي ديناميكياً لتجنب الـ broken paths
+  const baseLocale = locale ? `/${locale}` : '/ar';
 
   const socialLinks = [
     {
       name: 'Instagram',
       url: '#',
+      isExternal: true,
       svg: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
           <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
@@ -19,6 +28,7 @@ export default function Footer() {
     {
       name: 'LinkedIn',
       url: '#',
+      isExternal: true,
       svg: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
           <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
@@ -29,6 +39,7 @@ export default function Footer() {
     {
       name: 'Facebook',
       url: '#',
+      isExternal: true,
       svg: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
           <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
@@ -38,6 +49,7 @@ export default function Footer() {
     {
       name: 'WhatsApp',
       url: 'https://wa.me/971544118809',
+      isExternal: true,
       svg: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.5 21.5l4.664-1.173A9.956 9.956 0 0 0 12 22z" />
@@ -49,11 +61,9 @@ export default function Footer() {
   return (
     <footer className="relative w-full bg-brand-bg border-t border-brand-deep-teal/20 py-16 md:py-24 overflow-hidden font-['Cairo'] select-none" dir="rtl">
       
-      {/* 🔮 تأثير الإضاءة السينمائية الفاخرة (Ambient Glow / Aura) بديل الشبيكة */}
+      {/* 🔮 تأثير الإضاءة السينمائية الفاخرة (Ambient Glow / Aura) */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* إضاءة مركزية ناعمة جداً باللون الذهبي المطفي خلف الشعار مباشرة */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-brand-light-gold/5 rounded-full blur-[100px]" />
-        {/* إضاءة جانبية خافتة باللون الفيروزي العميق لتعطي أبعاد السجادة الحمراء والفخامة */}
         <div className="absolute -bottom-10 -right-20 w-[400px] h-[400px] bg-brand-deep-teal/10 rounded-full blur-[120px]" />
         <div className="absolute -bottom-10 -left-20 w-[400px] h-[400px] bg-brand-turquoise/5 rounded-full blur-[120px]" />
       </div>
@@ -92,47 +102,46 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* 📍 كتلة بيانات الاتصال بنسق عصري مصقول ونظيف */}
+        {/* 📍 كتلة بيانات الاتصال بنسق عصري مصقول باستخدام Link للتوجيه الذكي ومكافحة الـ Reload */}
         <div className="flex flex-col items-center gap-3 text-sm font-bold text-white/90 my-6">
           <div className="text-brand-light-gold/90 tracking-wide text-xs sm:text-sm font-semibold">
             أبوظبي، الإمارات العربية المتحدة <span className="text-brand-deep-gold/30 mx-1.5">—</span> Abu Dhabi, UAE
           </div>
           
-          <a 
+          <Link 
             href="tel:+971544118809" 
             className="font-sans text-lg text-white/80 transition-all duration-300 md:hover:text-brand-turquoise tracking-wide md:hover:translate-y-[-1px]"
             dir="ltr"
           >
             +971 54 411 8809
-          </a>
+          </Link>
           
-          <a 
+          <Link 
             href="mailto:info@jawaharat-aldana.ae" 
             className="font-sans text-xs sm:text-sm text-brand-turquoise/90 border-b border-brand-turquoise/10 pb-0.5 transition-all duration-300 md:hover:text-brand-light-gold md:hover:border-brand-light-gold/40 tracking-wide"
             dir="ltr"
           >
             info@jawaharat-aldana.ae
-          </a>
+          </Link>
         </div>
 
-        {/* 🌐 أزرار السوشيال ميديا: زجاجية نقية (Glassmorphic) بدون تعقيد */}
+        {/* 🌐 أزرار السوشيال ميديا: تم ترقيتها بالكامل إلى Link مع الحفاظ على خصائص النوافذ الخارجية */}
         <div className="flex items-center justify-center gap-6 sm:gap-8 my-8">
           {socialLinks.map((social, idx) => (
-            <a 
+            <Link 
               key={idx} 
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-2 group cursor-pointer"
             >
-              {/* تأثير الدائرة الزجاجية التي تمتص الضوء الخلفي عند تفعيل الهوفر في الشاشات الكبيرة فقط */}
               <div className="w-12 h-12 rounded-full border border-brand-turquoise/20 flex items-center justify-center text-brand-turquoise bg-white/[0.01] backdrop-blur-sm transition-all duration-500 ease-out md:group-hover:border-brand-light-gold md:group-hover:text-brand-light-gold md:group-hover:bg-brand-light-gold/[0.04] md:group-hover:scale-105 md:group-hover:shadow-[0_0_25px_rgba(238,220,165,0.1)]">
                 {social.svg}
               </div>
               <span className="text-[10px] font-bold text-brand-platinum font-sans tracking-widest uppercase transition-colors duration-300 md:group-hover:text-white/90">
                 {social.name}
               </span>
-            </a>
+            </Link>
           ))}
         </div>
 
