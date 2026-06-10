@@ -1,7 +1,33 @@
-// src/app/[locale]/blog/page.tsx
-import React from 'react';
+
 import BlogClient from '@/components/blog/BlogClient';
 import { query } from '@/lib/db';
+
+// 1. تعريف الهيكل (Interface) للبيانات لضمان الـ Type Safety
+interface Comment {
+  id: number;
+  userName: string;
+  text: string;
+  createdAt: string;
+}
+
+interface BlogPost {
+  id: number;
+  slug: string;
+  titleAr: string;
+  titleEn: string;
+  excerptAr: string;
+  excerptEn: string;
+  contentAr: string;
+  contentEn: string;
+  categoryAr: string;
+  categoryEn: string;
+  readTimeAr: string;
+  readTimeEn: string;
+  image: string;
+  likes: number;
+  views: number;
+  comments: Comment[];
+}
 
 export const dynamic = 'force-dynamic';
 
@@ -9,13 +35,12 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const isAr = locale === 'ar';
 
-  let posts = [];
+  // 2. تحديد النوع للمصفوفة بدلاً من any
+  let posts: BlogPost[] = [];
 
   try {
-    // جلب المقالات بـ SQL نقي
     const rawPosts = await query('SELECT * FROM blog_posts ORDER BY created_at DESC') || [];
 
-    // جلب وتنسيق البيانات مع تعليقاتها
     posts = await Promise.all(
       rawPosts.map(async (post: any) => {
         const comments = await query(
@@ -39,20 +64,14 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
           image: post.image,
           likes: post.likes || 0,
           views: post.views || 0,
-          comments: comments
+          comments: comments as Comment[]
         };
       })
     );
   } catch (error) {
     console.error("NeonDB Fetch Error:", error);
-    // في حال فشل الاتصال، لا يتوقف الموقع بل يعرض مصفوفة فارغة
     posts = []; 
   }
 
-  const categories = isAr 
-    ? ['الكل', 'بروتوكول الفعاليات', 'العناية بالسيارات', 'أخبار الدانة']
-    : ['All', 'Events Protocol', 'Car Care', 'AlDanat News'];
-
-  // ⚠️ التأكيد هنا: تأكد أن الاسم initialPosts تماماً وليس posts فقط
   return <BlogClient locale={locale} initialPosts={posts} />;
 }

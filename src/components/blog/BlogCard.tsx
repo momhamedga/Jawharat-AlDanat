@@ -97,16 +97,13 @@ export default function BlogCard({ post, locale, likes, onReadMore, onLike }: Bl
             {excerpt}
           </p>
         </div>
-
-        {/* 📊 شريط التفاعلات السفلي الثابت والأزرار الحية */}
+{/* 📊 شريط التفاعلات السفلي */}
         <div 
-          onClick={(e) => e.stopPropagation()} // 🛡️ حماية مطلقة: تمنع فتح المقال بالخطأ عند الضغط على الأزرار التفاعلية
+          onClick={(e) => e.stopPropagation()} 
           className="pt-4 border-t border-slate-100 flex items-center justify-between gap-2"
         >
           
-          {/* الأزرار التفاعلية الحية */}
           <div className="flex items-center gap-2.5 text-slate-400 text-xs font-bold">
-            {/* زر الإعجاب الفوري */}
             <button 
               onClick={onLike} 
               className="flex items-center gap-1.5 text-rose-500 bg-rose-50/70 border border-rose-100 hover:bg-rose-50 px-2.5 py-1.5 rounded-xl transition-all active:scale-90"
@@ -115,21 +112,24 @@ export default function BlogCard({ post, locale, likes, onReadMore, onLike }: Bl
               <span className="font-black text-xs">{likes}</span>
             </button>
 
-            {/* عدد المشاهدات اللحظي القادم من حقل views في NeonDB */}
             <span className="flex items-center gap-1 bg-slate-50 border border-slate-100 px-2.5 py-1.5 rounded-xl text-slate-500">
               <Eye className="w-3.5 h-3.5" /> 
               <span>{post.views || 0}</span>
             </span>
 
-            {/* عدد التعليقات الفعلي */}
             <span className="flex items-center gap-1 bg-brand-turquoise/5 border border-brand-turquoise/10 px-2.5 py-1.5 rounded-xl text-brand-turquoise">
               <MessageSquare className="w-3.5 h-3.5 fill-current opacity-20" /> 
               <span className="font-black">{post.comments?.length || 0}</span>
             </span>
           </div>
 
-          {/* زر فتح المقال التفاعلي - يتحول بالكامل ديناميكياً مع حركة الكارت الإجمالية */}
-          <div 
+          {/* زر "اقرأ المقال" المحدث ليكون Button صريح */}
+          <button 
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onReadMore();
+            }}
             className="flex items-center gap-1 text-xs font-black text-brand-deep-gold bg-brand-light-gold/10 group-hover:bg-brand-deep-gold group-hover:text-white px-3.5 py-2 rounded-xl border border-brand-light-gold/15 transition-all duration-300"
           >
             <span>{isAr ? 'اقرأ المقال' : 'Read Article'}</span>
@@ -138,7 +138,7 @@ export default function BlogCard({ post, locale, likes, onReadMore, onLike }: Bl
             ) : (
               <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform duration-300" />
             )}
-          </div>
+          </button>
 
         </div>
       </div>
