@@ -1,12 +1,21 @@
+import AboutSection from "@/components/about/AboutSection";
 
-export default function AboutPage() {
+// 🌟 السطر السحري لمنع الـ Static Caching وإجبار السيرفر على قراءة الكود الجديد فوراً
+export const dynamic = 'force-dynamic';
+
+interface AboutPageProps {
+  params: Promise<{
+    locale: string;
+  }>;
+}
+
+export default async function AboutPage({ params }: AboutPageProps) {
+  const { locale } = await params;
+
   return (
-    <main className="min-h-screen bg-brand-bg pt-24 font-['Cairo'] text-white" dir="rtl">
-      <div className="container mx-auto px-4 text-center">
-        {/* تحديث لضمان كسر الكاش وإجبار الـ Git على القراءة */}
-        <h1 className="text-3xl font-black text-brand-light-gold mb-4">من نحن — جوهرة الدانة</h1>
-        <p className="text-brand-platinum/80">مؤسسة متميزة في إدارة الفعاليات والمؤتمرات الفاخرة</p>
-      </div>
+    <main className="min-h-screen bg-slate-50 pt-20">
+      <AboutSection locale={locale} />
+  
     </main>
   );
 }

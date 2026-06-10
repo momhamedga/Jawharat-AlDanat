@@ -121,7 +121,7 @@ export default function Footer({ locale }: FooterProps) {
             className="font-sans text-xs sm:text-sm text-brand-turquoise/90 border-b border-brand-turquoise/10 pb-0.5 transition-all duration-300 md:hover:text-brand-light-gold md:hover:border-brand-light-gold/40 tracking-wide"
             dir="ltr"
           >
-            info@jawaharat-aldana.ae
+            info@jawaharat-aldana.com
           </Link>
         </div>
 

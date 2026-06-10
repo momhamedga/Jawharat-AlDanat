@@ -15,7 +15,7 @@ export default function Navbar({ locale }: { locale: string }) {
   const menuItems = [
     { label: isAr ? 'الرئيسية' : 'Home', href: `/${locale}` },
     { label: isAr ? 'عن الشركة' : 'About', href: `/${locale}/about` },
-    { label: isAr ? 'الخدمات' : 'Services', href: `/${locale}/#services` },
+    { label: isAr ? 'الخدمات' : 'Services', href: `/${locale}/services` },
     { label: isAr ? 'عملاؤنا' : 'Clients', href: `/${locale}/clients` },
     { label: isAr ? 'مدونة' : 'Blog', href: `/${locale}/blog` },
     { label: isAr ? 'انضم لفريقنا' : 'Join Us', href: `/${locale}/join` },

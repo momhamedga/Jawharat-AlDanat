@@ -1,11 +1,14 @@
+// src/app/[locale]/join/page.tsx
+import React from 'react';
+import JoinSection from '@/components/join/JoinSection';
 
-export default function JoinPage() {
-  return (
-    <main className="min-h-screen bg-brand-bg pt-28 font-['Cairo'] text-white" dir="rtl">
-      <div className="container mx-auto px-4 text-center">
-        <h1 className="text-3xl font-black text-brand-light-gold mb-4">انضم إلينا</h1>
-        <p className="text-brand-platinum/70 max-w-md mx-auto text-sm">كن جزءاً من فريق جوهرة الدانة واصنع معنا مستقبلاً من التميز الفاخر.</p>
-      </div>
-    </main>
-  );
+interface JoinPageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function JoinPage({ params }: JoinPageProps) {
+  // جلب الـ locale بشكل غير متزامن متوافق تماماً مع Next.js 15/16 ومعايير الـ Ultra-Modern
+  const { locale } = await params;
+
+  return <JoinSection locale={locale} />;
 }

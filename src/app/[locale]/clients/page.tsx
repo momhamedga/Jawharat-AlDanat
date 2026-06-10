@@ -1,12 +1,22 @@
+// src/app/[locale]/clients/page.tsx
 import React from 'react';
+import ClientsSection from '@/components/clients/ClientsSection';
 
-export default function ClientsPage() {
+export const dynamic = 'force-dynamic';
+
+interface ClientsPageProps {
+  params: Promise<{
+    locale: string;
+  }>;
+}
+
+export default async function ClientsPage({ params }: ClientsPageProps) {
+  const { locale } = await params;
+
   return (
-    <main className="min-h-screen bg-brand-bg pt-28 font-['Cairo'] text-white" dir="rtl">
-      <div className="container mx-auto px-4 text-center">
-        <h1 className="text-3xl font-black text-brand-light-gold mb-4">شركاء النجاح</h1>
-        <p className="text-brand-platinum/70 max-w-md mx-auto text-sm">نفخر بخدمة كبرى المؤسسات والجهات الحكومية والخاصة في دولة الإمارات.</p>
-      </div>
+    <main className="min-h-screen bg-slate-50 pt-20">
+      {/* تمرير اللغة لضمان التحول بين العربي والإنجليزي مستقبلاً بدون أي مشاكل */}
+      <ClientsSection locale={locale} />
     </main>
   );
 }
