@@ -7,63 +7,69 @@ export default function ServicesGrid({ locale }: { locale: string }) {
 
   const services = [
     {
-      id: 'polishing',
+      // تم ربطه بـ التلميع والسيراميك
+      id: 'polishing-ceramic', 
       icon: (
         <svg className="w-10 h-10 md:w-12 md:h-12 text-brand-deep-gold" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 21l8.944-8.944m-8.944 3.848l1.509-4.529H4.5m10.5 0l1.51 4.528m-1.51-4.528l-2.25-6.75h-3l-2.25 6.75m10.5 0h4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       ),
-      titleAr: 'والسيراميك Polishing الـ',
+      titleAr: 'التلميع الاحترافي وطبقات السيراميك',
       titleEn: 'Polishing & Ceramic Coating',
     },
     {
-      id: 'ppf',
+      // متطابق مع مجلد paint-protection-ppf
+      id: 'paint-protection-ppf', 
       icon: (
         <svg className="w-10 h-10 md:w-12 md:h-12 text-brand-deep-gold" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751A11.956 11.956 0 0112 2.714z" />
         </svg>
       ),
-      titleAr: 'حماية الطلاء PPF',
+      titleAr: 'أفلام حماية الطلاء PPF',
       titleEn: 'Paint Protection Film',
     },
     {
-      id: 'events',
+      // متطابق مع مجلد events-conferences
+      id: 'events-conferences', 
       icon: (
         <svg className="w-10 h-10 md:w-12 md:h-12 text-brand-deep-gold" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
         </svg>
       ),
-      titleAr: 'الفعاليات والمؤتمرات',
+      titleAr: 'إدارة الفعاليات والمؤتمرات',
       titleEn: 'Events & Conferences',
     },
     {
-      id: 'vip-events',
+      // متطابق مع مجلد vip-event-management
+      id: 'vip-event-management', 
       icon: (
         <svg className="w-10 h-10 md:w-12 md:h-12 text-brand-deep-gold" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499c.173-.439.817-.439.99 0l3.07 12.565a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 18.574c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l3.07-12.565z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499c.172-.435.744-.435.916 0l2.131 5.377 5.816.417c.473.034.662.612.31.916l-4.433 3.863 1.354 5.672c.11.463-.39.825-.797.562l-4.91-3.176-4.911 3.176c-.407.263-.907-.099-.797-.562l1.354-5.672-4.433-3.863c-.352-.304-.162-.882.31-.916l5.816-.417 2.13-5.377z" />
         </svg>
       ),
-      titleAr: 'إدارة الفعاليات VIP',
+      titleAr: 'تنظيم مناسبات كبار الشخصيات VIP',
       titleEn: 'VIP Event Management',
     },
     {
-      id: 'deep-cleaning',
+      // متطابق مع مجلد deep-cleaning-detailing
+      id: 'deep-cleaning-detailing', 
       icon: (
         <svg className="w-10 h-10 md:w-12 md:h-12 text-brand-deep-gold" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1.5M12 18.75V21m-6.75-4.25l1.06-1.06m11.38 0l1.06 1.06m-11.38-11.38l1.06 1.06m11.38 0l1.06-1.06M21 12h-1.5M5.25 12H3m14.25 4.5a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
         </svg>
       ),
-      titleAr: 'التنظيف العميق',
+      titleAr: 'التنظيف العميق بالبخار والـ Detailing',
       titleEn: 'Deep Cleaning & Detailing',
     },
     {
-      id: 'heat-insulation',
+      // متطابق مع مجلد heat-insulation-film
+      id: 'heat-insulation-film', 
       icon: (
         <svg className="w-10 h-10 md:w-12 md:h-12 text-brand-deep-gold" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1.5m0 15V21m-9-9h1.5m15 0H21m-3.343-5.657l-1.06 1.06m-7.18 7.18l-1.06 1.06m0-9.3c.3.921-.755 1.688-1.54 1.118l-1.06-1.06m9.3 9.3l-1.06-1.06" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m14.25 4.5a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
         </svg>
       ),
-      titleAr: 'العزل الحراري',
+      titleAr: 'أفلام العزل الحراري والتظليل النانو',
       titleEn: 'Heat Insulation Film',
     }
   ];
@@ -77,11 +83,11 @@ export default function ServicesGrid({ locale }: { locale: string }) {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-16 relative z-10">
         
-        {/* 👑 هيدر القسم - متطابق مع التسمية والتفاصيل في السكرين شوت */}
+        {/* 👑 هيدر القسم */}
         <div className="w-full flex flex-col md:flex-row items-center justify-between border-b border-brand-deep-teal/10 pb-6 mb-12 gap-4">
           <div className="text-center md:text-start w-full md:w-auto">
             <h2 className="text-3xl sm:text-4xl font-black text-brand-bg tracking-tight">
-              {isAr ? 'شبكة الخدمات' : 'Services Grid'}
+              {isAr ? 'شبكة الخدمات الحصرية' : 'Services Grid'}
             </h2>
             <p className="text-xs md:text-sm font-bold text-brand-turquoise mt-2 tracking-wide uppercase">
               {isAr ? 'خدماتنا الأساسية — مصممة لتجربة مستخدم استثنائية' : 'Services Grid — Main Page'}
@@ -113,15 +119,15 @@ export default function ServicesGrid({ locale }: { locale: string }) {
 
               {/* العنوان العربي الفخم بخط كابرو ووزن عريض جداً */}
               <h3 className="text-base sm:text-lg md:text-xl font-black text-brand-bg transition-colors duration-300 lg:group-hover:text-brand-deep-teal">
-                {service.titleAr}
+                {isAr ? service.titleAr : service.titleEn}
               </h3>
 
               {/* العنوان الإنجليزي الفرعي المتناسق */}
               <p className="mt-2 text-[11px] sm:text-xs md:text-sm font-bold text-brand-turquoise tracking-wide">
-                {service.titleEn}
+                {isAr ? service.titleEn : service.titleAr}
               </p>
 
-              {/* ✨ الحل الذكي للموبايل: الـ معين الزخرفي ظاهر دائمًا على الجوال بحجم ناعم، ويتحرك بمرونة رشيقة على الشاشات الكبيرة */}
+              {/* ✨ المعين الزخرفي ظاهر دائمًا على الجوال بحجم ناعم، ويتحرك بمرونة رشيقة على الشاشات الكبيرة */}
               <div className="mt-5 flex items-center justify-center gap-1 transition-all duration-500 transform lg:opacity-0 lg:translate-y-2 lg:group-hover:opacity-100 lg:group-hover:translate-y-0">
                 <span className="w-1 h-1 md:w-1.5 md:h-1.5 rotate-45 bg-brand-deep-gold" />
                 <span className="w-6 md:w-8 h-[1px] bg-brand-deep-gold/40" />
@@ -130,8 +136,6 @@ export default function ServicesGrid({ locale }: { locale: string }) {
             </Link>
           ))}
         </div>
-
-  
 
       </div>
     </section>

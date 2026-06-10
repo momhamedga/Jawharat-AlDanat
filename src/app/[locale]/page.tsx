@@ -4,6 +4,7 @@ import EliteEvents from '@/components/home/EliteEvents';
 import EventsConferences from '@/components/home/EventsConferences';
 import EventShowcase from '@/components/home/EventShowcase';
 import Hero from '@/components/home/Hero';
+import OwnerSection from '@/components/home/OwnerSection';
 import PpfService from '@/components/home/PpfService';
 import ServicesGrid from '@/components/home/ServicesGrid';
 import StoryTimeline from '@/components/home/StoryTimeline';
@@ -18,12 +19,14 @@ export default async function HomePage({ params }: PageProps) {
   return (
     <>
       <Hero locale={locale} />
+        <OwnerSection locale={locale} />
             <About locale={locale} />
+            <StoryTimeline locale={locale} />
               <ServicesGrid locale={locale} />
-                 <StoryTimeline locale={locale} />
-  <EventsConferences locale={locale} />
+                 
+
   <EventShowcase locale={locale} />
-  <PpfService locale={locale} />
+   <EventsConferences locale={locale} />
     </>
   );
 }
