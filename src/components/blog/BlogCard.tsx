@@ -31,8 +31,7 @@ export default function BlogCard({ post, locale, likes, onReadMore, onLike }: Bl
   const excerpt = isAr ? (post.excerptAr || post.excerpt_ar) : (post.excerptEn || post.excerpt_en);
   const category = isAr ? (post.categoryAr || post.category_ar) : (post.categoryEn || post.category_en);
   const readTime = isAr ? (post.readTimeAr || post.read_time_ar) : (post.readTimeEn || post.read_time_en);
-  const rawDate = post.createdAt || post.created_at;
-
+const rawDate = post.created_at;
   return (
     <div 
       onClick={onReadMore}
