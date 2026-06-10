@@ -10,7 +10,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
   const { locale } = await params;
 
   return (
-    <div className="relative min-h-screen bg-slate-50 text-slate-900 overflow-hidden py-24 px-4 sm:px-6 lg:px-8">
+    <div className="relative min-h-screen bg-slate-50 text-slate-900 overflow-hidden py-40 px-4 sm:px-6 lg:px-8">
      {/* 🌌 تأثير الإضاءة المحيطية مع المصفوفة المنقطة (Dot Grid Matrix) */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-brand-light-gold/10 rounded-full blur-[140px]" />

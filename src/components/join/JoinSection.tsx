@@ -13,7 +13,7 @@ export default function JoinSection({ locale }: JoinSectionProps) {
   const isAr = locale === 'ar';
 
   return (
-    <section className="relative w-full py-20 md:py-32 bg-slate-50 overflow-hidden font-['Cairo'] select-none" dir={isAr ? 'rtl' : 'ltr'}>
+    <section className="relative w-full py-40 md:py-52 bg-slate-50 overflow-hidden font-['Cairo'] select-none" dir={isAr ? 'rtl' : 'ltr'}>
       
       {/* 🔮 الخلفية الهندسية المنقطة مع هالات الإضاءة الفاتحة */}
       <div className="absolute inset-0 pointer-events-none z-0">

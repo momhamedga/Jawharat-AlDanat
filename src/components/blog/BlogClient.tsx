@@ -99,7 +99,7 @@ export default function BlogClient({ locale, initialPosts = [] }: BlogClientProp
   });
 
   return (
-    <section className="relative w-full min-h-screen py-20 md:py-32 bg-slate-50 overflow-hidden font-['Cairo'] select-none" dir={isAr ? 'rtl' : 'ltr'}>
+    <section className="relative w-full  py-40 md:py-32 bg-slate-50 overflow-hidden font-['Cairo'] select-none" dir={isAr ? 'rtl' : 'ltr'}>
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-[-5%] left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-brand-light-gold/15 to-transparent rounded-full blur-[130px]" />
         <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1.5px,transparent_1.5px)] [background-size:32px_32px] opacity-70" />
