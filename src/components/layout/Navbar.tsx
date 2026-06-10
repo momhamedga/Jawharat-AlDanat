@@ -21,6 +21,15 @@ export default function Navbar({ locale }: { locale: string }) {
     { label: isAr ? 'انضم لفريقنا' : 'Join Us', href: `/${locale}/join` },
   ];
 
+  // دالة ذكية لاحتساب مسار اللغة البديلة تلقائياً لتجنب الـ Broken Links
+  const getLanguageSwitchUrl = () => {
+    if (!pathname) return isAr ? '/en' : '/ar';
+    const segments = pathname.split('/');
+    // استبدال segment اللغة الأول (index 1) باللغة البديلة
+    segments[1] = isAr ? 'en' : 'ar';
+    return segments.join('/');
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -33,40 +42,47 @@ export default function Navbar({ locale }: { locale: string }) {
     setIsOpen(false);
   }, [pathname]);
 
+  // مكون الأيقونة الموحد للغة لتقليل التكرار الحجمي للـ DOM
+  const LanguageIcon = () => (
+    <svg className="w-4 h-4 text-brand-light-gold transition-transform duration-500 group-hover:rotate-12" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zM12 3v18M3 12h18M5.5 6.5A18.66 18.66 0 009 12a18.66 18.66 0 00-3.5 5.5M18.5 6.5A18.66 18.66 0 0115 12a18.66 18.66 0 013.5 5.5" />
+    </svg>
+  );
+
   return (
     <>
-      {/* 🌟 هيدر زجاجي فاخر بلون البراند الداكن مدمج بنسبة شفافية كريستالية وبدون أي لون أبيض صريح */}
+      {/* 🌟 هيدر زجاجي فاخر بلون البراند الداكن مدمج بنسبة شفافية كريستالية */}
       <header 
         className={`fixed top-0 inset-x-0 z-50 w-full transition-all duration-300 border-b ${
           isScrolled 
             ? 'bg-brand-bg/85 backdrop-blur-xl border-brand-turquoise/20 shadow-[0_4px_30px_rgba(3,15,30,0.4)] h-16' 
             : 'bg-brand-bg/99 backdrop-blur-md border-brand-deep-teal/20 h-20'
         }`}
+        dir={isAr ? 'rtl' : 'ltr'}
       >
         <div className="container mx-auto h-full flex items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-16">
-<Link href={`/${locale}`} className="flex items-center gap-3 select-none group">
-  <div className="relative w-12 h-12 md:w-14 md:h-14 transition-transform duration-300 group-hover:scale-105 filter drop-shadow-[0_2px_8px_rgba(197,168,107,0.2)]">
-    <Image
-      src="/images/logo.webp"
-      alt="Jawharat AlDanat Logo"
-      fill
-      priority
-      className="object-contain"
-    />
-  </div>
+          
+          <Link href={`/${locale}`} className="flex items-center gap-3 select-none group">
+            <div className="relative w-12 h-12 md:w-14 md:h-14 transition-transform duration-300 group-hover:scale-105 filter drop-shadow-[0_2px_8px_rgba(197,168,107,0.2)]">
+              <Image
+                src="/images/logo.webp"
+                alt="Jawharat AlDanat Logo"
+                fill
+                priority
+                className="object-contain"
+              />
+            </div>
+            <div className="flex flex-col items-start">
+              <span className="text-lg md:text-xl font-black tracking-tight bg-gradient-to-r from-brand-deep-gold to-brand-light-gold bg-clip-text text-transparent drop-shadow-sm">
+                JD
+              </span>
+              <span className="text-[10px] md:text-xs text-brand-light-gold font-bold tracking-wide transition-colors group-hover:text-brand-turquoise">
+                {isAr ? 'جوهرة الدانة' : 'Jawharat Al Danat'}
+              </span>
+            </div>
+          </Link>
 
-  {/* النصوص المرافقة للشعار */}
-  <div className="flex flex-col items-start">
-    <span className="text-lg md:text-xl font-black tracking-tight bg-gradient-to-r from-brand-deep-gold to-brand-light-gold bg-clip-text text-transparent drop-shadow-sm">
-      JD
-    </span>
-    <span className="text-[10px] md:text-xs text-brand-light-gold font-bold tracking-wide transition-colors group-hover:text-brand-turquoise">
-      {isAr ? 'جوهرة الدانة' : 'Jawharat Al Danat'}
-    </span>
-  </div>
-</Link>
-
-          {/* 💻 روابط الديسك توب بتباين مدروس؛ تيركواز ناعم للحالة العادية وذهبي مشع للنشط */}
+          {/* 💻 روابط الديسك توب بتباين مدروس */}
           <nav className="hidden lg:flex items-center gap-10">
             {menuItems.map((item, idx) => {
               const isActive = pathname === item.href;
@@ -79,8 +95,7 @@ export default function Navbar({ locale }: { locale: string }) {
                   }`}
                 >
                   {item.label}
-                  {/* خط تفاعلي سفلي يندمج بانسيابية بين درجات ثيمك الفاخر */}
-                  <span className={`absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-brand-deep-gold via-brand-light-gold to-brand-turquoise transition-transform duration-300 origin-left ${
+                  <span className={`absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-brand-deep-gold via-brand-light-gold to-brand-turquoise transition-transform duration-300 ${isAr ? 'origin-right' : 'origin-left'} ${
                     isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                   }`} />
                 </Link>
@@ -89,17 +104,28 @@ export default function Navbar({ locale }: { locale: string }) {
           </nav>
 
           {/* 🔘 الأزرار والتحكم المتجاوب */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 md:gap-4">
             
-            {/* زر الحجز بالتدرج الذهبي المتناسق بالكامل مع لون الخلفية الأساسي الداكن */}
+            {/* 🌐 زر تغيير اللغة للديسك توب (Glassmorphic Button) */}
+            <Link
+              href={getLanguageSwitchUrl()}
+              className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl border border-brand-turquoise/20 bg-brand-deep-teal/10 hover:bg-brand-deep-teal/30 hover:border-brand-light-gold/40 transition-all duration-300 group"
+            >
+              <LanguageIcon />
+              <span className="text-xs font-black text-brand-light-gold font-sans tracking-wide">
+                {isAr ? 'EN' : 'العربية'}
+              </span>
+            </Link>
+            
+            {/* زر الحجز بالتدرج الذهبي المتناسق */}
             <Link 
               href={`/${locale}/contact`}
-              className="hidden sm:inline-flex items-center justify-center px-6 py-2.5 bg-gradient-to-r from-brand-deep-gold to-brand-light-gold text-brand-bg font-black text-xs md:text-sm rounded-xl shadow-[0_4px_20px_rgba(197,168,107,0.25)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+              className="hidden sm:inline-flex items-center justify-center px-5 py-2 md:px-6 md:py-2.5 bg-gradient-to-r from-brand-deep-gold to-brand-light-gold text-brand-bg font-black text-xs md:text-sm rounded-xl shadow-[0_4px_20px_rgba(197,168,107,0.25)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
             >
               {isAr ? 'تواصل معنا' : 'Contact Us'}
             </Link>
 
-            {/* زر Hamburger ذكي بلون معزز من درجات البراند بدون خلفيات بيضاء نهائياً */}
+            {/* زر Hamburger للموبايل */}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="flex lg:hidden flex-col items-center justify-center w-10 h-10 rounded-xl bg-brand-deep-teal/30 border border-brand-turquoise/20 shadow-sm focus:outline-none z-50 relative"
@@ -108,7 +134,7 @@ export default function Navbar({ locale }: { locale: string }) {
               <div className="w-5 flex flex-col gap-1">
                 <span className={`h-[2px] w-full bg-brand-light-gold rounded-full transition-transform duration-300 ${isOpen ? 'rotate-45 translate-y-[6px]' : ''}`} />
                 <span className={`h-[2px] w-full bg-brand-light-gold rounded-full transition-opacity duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'}`} />
-                <span className={`h-[2px] w-full bg-brand-light-gold rounded-full transition-transform duration-300 ${isOpen ? '-rotate-45 translate-y-[-6px]' : ''}`} />
+                <span className={`h-[2px] w-full bg-brand-light-gold rounded-full transition-transform duration-300 ${isOpen ? '-rotate-45 translate-y-[6px]' : ''}`} />
               </div>
             </button>
 
@@ -117,21 +143,19 @@ export default function Navbar({ locale }: { locale: string }) {
         </div>
       </header>
 
-      {/* 📱 قائمة الموبايل المنزلقة بوضوحها الفاخر والممتد مع إلغاء الخلفيات البيضاء */}
+      {/* 📱 قائمة الموبايل المنزلقة بوضوحها الفاخر والممتد */}
       <div 
         className={`fixed inset-0 z-40 lg:hidden transition-all duration-500 ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
-        {/* تعتيم زجاجي ناعم للغاية مستوحى من لون الـ brand-bg الخارجي */}
         <div className="absolute inset-0 bg-brand-bg/60 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
 
-        {/* جسم القائمة المنزلقة مبني بالكامل على لون الـ brand-bg الداكن الفخم مع ضبط البوردر المتجاوب بشكل صحيح */}
-        <div className={`fixed top-0 bottom-0 w-[280px] sm:w-[320px] bg-brand-bg/95 backdrop-blur-2xl shadow-[-5px_0_40px_rgba(3,15,30,0.6)] border-brand-deep-teal/30 p-6 pt-28 flex flex-col justify-between transition-transform duration-500 ease-out z-50 ${
+        <div className={`fixed top-0 bottom-0 w-[280px] sm:w-[320px] bg-brand-bg/95 backdrop-blur-2xl shadow-[-5px_0_40px_rgba(3,15,30,0.6)] p-6 pt-28 flex flex-col justify-between transition-transform duration-500 ease-out z-50 ${
           isAr 
             ? (isOpen ? 'right-0' : '-right-full') 
             : (isOpen ? 'left-0' : '-left-full')
-        } ${isAr ? 'border-l' : 'border-r'}`}>
+        } ${isAr ? 'border-l border-brand-deep-teal/30' : 'border-r border-brand-deep-teal/30'}`}>
           
           <div className="flex flex-col gap-4">
             {menuItems.map((item, idx) => {
@@ -152,13 +176,26 @@ export default function Navbar({ locale }: { locale: string }) {
             })}
           </div>
 
-          <div className="pt-6 border-t border-brand-deep-teal/20 sm:hidden">
+          <div className="pt-6 border-t border-brand-deep-teal/20 flex flex-col gap-3">
+            {/* 🌐 زر تغيير اللغة للموبايل منبثق أسفل القائمة المنزلقة لسهولة التحكم اللمسي */}
             <Link
-              href={`/${locale}/contact`}
-              className="w-full flex items-center justify-center py-3.5 bg-gradient-to-r from-brand-deep-gold to-brand-light-gold text-brand-bg font-black text-sm rounded-xl shadow-[0_4px_15px_rgba(197,168,107,0.3)]"
+              href={getLanguageSwitchUrl()}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-brand-turquoise/20 bg-brand-deep-teal/10 text-brand-light-gold transition-all duration-300 group"
             >
-              {isAr ? 'تواصل معنا' : 'Contact Us'}
+              <LanguageIcon />
+              <span className="text-xs font-black tracking-wide font-sans">
+                {isAr ? 'Switch to English' : 'التحويل إلى العربية'}
+              </span>
             </Link>
+
+            <div className="sm:hidden">
+              <Link
+                href={`/${locale}/contact`}
+                className="w-full flex items-center justify-center py-3.5 bg-gradient-to-r from-brand-deep-gold to-brand-light-gold text-brand-bg font-black text-sm rounded-xl shadow-[0_4px_15px_rgba(197,168,107,0.3)]"
+              >
+                {isAr ? 'تواصل معنا' : 'Contact Us'}
+              </Link>
+            </div>
           </div>
 
         </div>

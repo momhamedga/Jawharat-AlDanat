@@ -16,7 +16,7 @@ export default function OwnerSection({ locale }: { locale: string }) {
       icon: <Crown className="w-5 h-5 text-brand-deep-gold" />
     },
     {
-      titleAr: 'مستشارة استراتيجية',
+      titleAr: 'مستشا استراتيجية',
       titleEn: 'Strategic Consultant',
       descAr: 'تقديم حلول استشارية متكاملة لتطوير الأداء المؤسسي.',
       descEn: 'Providing integrated advisory to elevate corporate performance.',
@@ -64,10 +64,19 @@ export default function OwnerSection({ locale }: { locale: string }) {
                 <div className="w-10 h-10 rounded-xl bg-brand-bg flex items-center justify-center text-brand-light-gold shadow-sm">
                   <Target className="w-5 h-5 animate-pulse" />
                 </div>
-                <div>
-                  <span className="block text-[10px] font-black text-brand-turquoise uppercase tracking-wider">Visionary Leader</span>
-                  <span className="block text-xs font-black text-brand-bg mt-0.5">رؤية مستقبلية طموحة</span>
-                </div>
+             <div className={isAr ? 'text-right' : 'text-left'}>
+  {isAr ? (
+    <>
+      <span className="block text-[10px] font-black text-brand-turquoise uppercase tracking-wider font-['Cairo']">قائدة ملهمة</span>
+      <span className="block text-xs font-black text-brand-bg mt-0.5 font-['Cairo']">رؤية مستقبلية طموحة</span>
+    </>
+  ) : (
+    <>
+      <span className="block text-[10px] font-black text-brand-turquoise uppercase tracking-wider font-sans">Visionary Leader</span>
+      <span className="block text-xs font-black text-brand-bg mt-0.5 font-sans">Ambitious Future Vision</span>
+    </>
+  )}
+</div>
               </div>
 
               {/* إطار هندسي زخرفي خلف الكارت لإعطاء طابع ملوكي */}
@@ -78,23 +87,45 @@ export default function OwnerSection({ locale }: { locale: string }) {
           {/* 📝 الجانب الثاني: المحتوى النصي الفخم والركائز الإستراتيجية */}
           <div className="col-span-1 lg:col-span-7 space-y-8 text-center lg:text-right order-1 lg:order-2">
             
-            {/* مقدمة الاسم واللقب الفاخر */}
-            <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 bg-brand-bg text-white px-4 py-1.5 rounded-full text-xs font-black tracking-wide">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-light-gold animate-ping" />
-                <span>{isAr ? 'نموذج إماراتي ملهم' : 'Inspirational Emirati Model'}</span>
-              </div>
-              
-              <h2 className="text-3xl sm:text-5xl font-black text-brand-bg tracking-tight leading-tight">
-                {isAr ? 'الدكتورة حمامه القبيسي' : 'Dr. Hamama Al Qubaisi'}
-              </h2>
-              
-              <p className="text-base sm:text-lg font-black bg-gradient-to-r from-brand-deep-gold to-brand-turquoise bg-clip-text text-transparent">
-                {isAr ? 'مدربة ! مستشارة ! رائدة أعمال إماراتية' : 'Trainer ! Consultant ! Emirati Entrepreneur'}
-              </p>
-              
-              <div className="w-24 h-[3px] bg-brand-deep-gold rounded-full mx-auto lg:mx-0 mt-2" />
-            </div>
+    {/* 👑 هيدر قسم التعريف الفاخر - موحد هندسياً وبصرياً مع هوية البراند الكريستالية */}
+<div className="text-center space-y-3 mb-12 md:mb-20 flex flex-col items-center">
+  
+  {/* شارة النموذج الملهم بالخلفية الزجاجية */}
+  <span className="text-[10px] md:text-xs font-black tracking-[0.2em] text-brand-deep-gold bg-brand-light-gold/15 px-4 py-1.5 rounded-full uppercase">
+    {isAr ? 'نموذج إماراتي ملهم' : 'Inspirational Emirati Model'}
+  </span>
+  
+  {/* اسم الدكتورة باللون البلاتيني الناصع المتناقض مع الخلفية الداكنة */}
+  <h2 className={`text-2xl sm:text-4xl md:text-5xl font-black text-brand-bg tracking-tight leading-tight ${!isAr && 'font-sans'}`}>
+    {isAr ? 'الدكتورة حمامه القبيسي' : 'Dr. Hamama Al Qubaisi'}
+  </h2>
+  
+  {/* 💎 الفاصل الملوكي الموحد (المعين الفاخر والخط المتدرج المذهب) */}
+  <div className="relative w-40 md:w-48 h-[1px] bg-gradient-to-r from-transparent via-brand-deep-gold/40 to-transparent my-2 flex items-center justify-center">
+    <div className="w-1.5 h-1.5 md:w-2 md:h-2 rotate-45 bg-brand-deep-gold border border-brand-light-gold/40 shadow-sm animate-pulse" />
+  </div>
+  
+  {/* الألقاب الاستراتيجية مصممة بلغة الـ Premium Corporate Design */}
+  <p className={`text-xs sm:text-sm font-semibold text-slate-400 max-w-xl leading-relaxed flex items-center justify-center gap-2 flex-wrap ${!isAr && 'font-sans'}`}>
+    {isAr ? (
+      <>
+        <span>مدربة معتمدة</span>
+        <span className="text-brand-bg font-light">/</span>
+        <span>مستشارة استراتيجية</span>
+        <span className="text-brand-bg font-light">/</span>
+        <span>رائدة أعمال إماراتية</span>
+      </>
+    ) : (
+      <>
+        <span>Executive Trainer</span>
+        <span className="text-brand-bg font-light">/</span>
+        <span>Strategic Consultant</span>
+        <span className="text-brand-bg font-light">/</span>
+        <span>Emirati Entrepreneur</span>
+      </>
+    )}
+  </p>
+</div>
 
             {/* النص السردي المكتوب بصياغة بليغة ومريحة جداً في القراءة */}
             <p className="text-sm sm:text-base font-bold text-slate-600 leading-relaxed max-w-3xl mx-auto lg:mx-0">
