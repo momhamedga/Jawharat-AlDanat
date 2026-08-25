@@ -1,205 +1,92 @@
-// src/components/layout/Navbar.tsx
-'use client';
-
-import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import Image from 'next/image';
+import { mainNavItems } from '@/config/navigation';
+import { MobileNav } from '@/components/layout/MobileNav';
+import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher';
+import { ThemeToggle } from '@/components/theme/ThemeToggle';
 
-export default function Navbar({ locale }: { locale: string }) {
+interface NavbarProps {
+  locale: string;
+}
+
+export default function Navbar({ locale }: NavbarProps) {
   const isAr = locale === 'ar';
-  const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  const menuItems = [
-    { label: isAr ? 'الرئيسية' : 'Home', href: `/${locale}` },
-    { label: isAr ? 'عن الشركة' : 'About', href: `/${locale}/about` },
-    { label: isAr ? 'الخدمات' : 'Services', href: `/${locale}/services` },
-    { label: isAr ? 'عملاؤنا' : 'Clients', href: `/${locale}/clients` },
-    { label: isAr ? 'مدونة' : 'Blog', href: `/${locale}/blog` },
-    { label: isAr ? 'انضم لفريقنا' : 'Join Us', href: `/${locale}/join` },
-  ];
-
-  // دالة ذكية لاحتساب مسار اللغة البديلة تلقائياً لتجنب الـ Broken Links
-  const getLanguageSwitchUrl = () => {
-    if (!pathname) return isAr ? '/en' : '/ar';
-    const segments = pathname.split('/');
-    // استبدال segment اللغة الأول (index 1) باللغة البديلة
-    segments[1] = isAr ? 'en' : 'ar';
-    return segments.join('/');
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
-
-  // مكون الأيقونة الموحد للغة لتقليل التكرار الحجمي للـ DOM
-  const LanguageIcon = () => (
-    <svg className="w-4 h-4 text-brand-light-gold transition-transform duration-500 group-hover:rotate-12" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zM12 3v18M3 12h18M5.5 6.5A18.66 18.66 0 009 12a18.66 18.66 0 00-3.5 5.5M18.5 6.5A18.66 18.66 0 0115 12a18.66 18.66 0 013.5 5.5" />
-    </svg>
-  );
 
   return (
-    <>
-      {/* 🌟 هيدر زجاجي فاخر بلون البراند الداكن مدمج بنسبة شفافية كريستالية */}
-      <header 
-        className={`fixed top-0 inset-x-0 z-50 w-full transition-all duration-300 border-b ${
-          isScrolled 
-            ? 'bg-brand-bg/85 backdrop-blur-xl border-brand-turquoise/20 shadow-[0_4px_30px_rgba(3,15,30,0.4)] h-16' 
-            : 'bg-brand-bg/99 backdrop-blur-md border-brand-deep-teal/20 h-20'
-        }`}
-        dir={isAr ? 'rtl' : 'ltr'}
-      >
-        <div className="container mx-auto h-full flex items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-16">
+    <header
+      className="sticky top-0 inset-x-0 z-40 w-full bg-background/95 backdrop-blur-md border-b border-border/80 transition-all duration-300"
+      dir={isAr ? 'rtl' : 'ltr'}
+    >
+      <div className="max-w-7xl mx-auto h-16 sm:h-20 px-3.5 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4">
+        
+        {/* 👑 Brand Logo & Typography (Responsive Mobile/Desktop Composition) */}
+        <Link
+          href={`/${locale}`}
+          className="flex items-center gap-2 sm:gap-3.5 group select-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg p-1 min-w-0 flex-1 sm:flex-initial"
+          aria-label={isAr ? 'جوهرة الدانة - الصفحة الرئيسية' : 'Jawharat Al Danat - Home'}
+        >
+          <div className="relative w-8 h-8 sm:w-11 sm:h-11 md:w-12 md:h-12 transition-transform duration-300 group-hover:scale-105 shrink-0">
+            <Image
+              src="/images/logo.webp"
+              alt={isAr ? 'شعار جوهرة الدانة' : 'Jawharat Al Danat Logo'}
+              fill
+              priority
+              sizes="(max-width: 640px) 32px, 48px"
+              className="object-contain"
+            />
+          </div>
+          <div className="flex flex-col min-w-0">
+            <span className="text-xs sm:text-base md:text-lg font-black tracking-tight text-foreground group-hover:text-primary transition-colors whitespace-nowrap truncate">
+              {isAr ? 'جوهرة الدانة' : 'Jawharat Al Danat'}
+            </span>
+            <span className="hidden sm:block text-[11px] font-semibold text-muted-foreground tracking-wide whitespace-nowrap">
+              {isAr ? 'للفخامة والعناية الفائقة' : 'Excellence & Luxury Care'}
+            </span>
+          </div>
+        </Link>
+
+        {/* 💻 Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2" aria-label="Desktop Navigation">
+          {mainNavItems.map((item) => {
+            const href = `/${locale}${item.path}`;
+            return (
+              <Link
+                key={item.key}
+                href={href}
+                className="px-3.5 py-2 rounded-md text-sm font-semibold text-foreground/80 hover:text-primary hover:bg-secondary/40 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus:outline-none"
+              >
+                {isAr ? item.labelAr : item.labelEn}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* 🔘 Desktop Actions (Language Switcher + Theme Toggle + Contact CTA) & Mobile Trigger */}
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           
-          <Link href={`/${locale}`} className="flex items-center gap-3 select-none group">
-            <div className="relative w-12 h-12 md:w-14 md:h-14 transition-transform duration-300 group-hover:scale-105 filter drop-shadow-[0_2px_8px_rgba(197,168,107,0.2)]">
-              <Image
-                src="/images/logo.webp"
-                alt="Jawharat AlDanat Logo"
-                fill
-                priority
-                className="object-contain"
-              />
-            </div>
-            <div className="flex flex-col items-start">
-              <span className="text-lg md:text-xl font-black tracking-tight bg-gradient-to-r from-brand-deep-gold to-brand-light-gold bg-clip-text text-transparent drop-shadow-sm">
-                JD
-              </span>
-              <span className="text-[10px] md:text-xs text-brand-light-gold font-bold tracking-wide transition-colors group-hover:text-brand-turquoise">
-                {isAr ? 'جوهرة الدانة' : 'Jawharat Al Danat'}
-              </span>
-            </div>
+          {/* 🌐 Desktop Language Switcher Link (Route-Preserving Client Island) */}
+          <LanguageSwitcher
+            locale={locale}
+            className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-border bg-secondary/30 text-xs font-semibold text-foreground/90 hover:text-primary hover:border-primary/40 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus:outline-none"
+          />
+
+          {/* 🌓 Theme Toggle (Light / Dark Client Island) */}
+          <ThemeToggle locale={locale} className="hidden sm:inline-flex" />
+
+          {/* 🏛️ Primary Desktop Contact CTA */}
+          <Link
+            href={`/${locale}/contact`}
+            className="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-md bg-primary text-primary-foreground font-bold text-xs sm:text-sm shadow hover:bg-primary/90 transition-all focus-visible:ring-2 focus-visible:ring-ring focus:outline-none active:scale-[0.98]"
+          >
+            {isAr ? 'تواصل معنا' : 'Contact Us'}
           </Link>
 
-          {/* 💻 روابط الديسك توب بتباين مدروس */}
-          <nav className="hidden lg:flex items-center gap-10">
-            {menuItems.map((item, idx) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link 
-                  key={idx} 
-                  href={item.href} 
-                  className={`text-xs md:text-sm font-black tracking-wide transition-all duration-300 relative py-1 group ${
-                    isActive ? 'text-brand-deep-gold' : 'text-brand-turquoise/80 hover:text-brand-light-gold'
-                  }`}
-                >
-                  {item.label}
-                  <span className={`absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-brand-deep-gold via-brand-light-gold to-brand-turquoise transition-transform duration-300 ${isAr ? 'origin-right' : 'origin-left'} ${
-                    isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                  }`} />
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* 🔘 الأزرار والتحكم المتجاوب */}
-          <div className="flex items-center gap-3 md:gap-4">
-            
-            {/* 🌐 زر تغيير اللغة للديسك توب (Glassmorphic Button) */}
-            <Link
-              href={getLanguageSwitchUrl()}
-              className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl border border-brand-turquoise/20 bg-brand-deep-teal/10 hover:bg-brand-deep-teal/30 hover:border-brand-light-gold/40 transition-all duration-300 group"
-            >
-              <LanguageIcon />
-              <span className="text-xs font-black text-brand-light-gold font-sans tracking-wide">
-                {isAr ? 'EN' : 'العربية'}
-              </span>
-            </Link>
-            
-            {/* زر الحجز بالتدرج الذهبي المتناسق */}
-            <Link 
-              href={`/${locale}/contact`}
-              className="hidden sm:inline-flex items-center justify-center px-5 py-2 md:px-6 md:py-2.5 bg-gradient-to-r from-brand-deep-gold to-brand-light-gold text-brand-bg font-black text-xs md:text-sm rounded-xl shadow-[0_4px_20px_rgba(197,168,107,0.25)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
-            >
-              {isAr ? 'تواصل معنا' : 'Contact Us'}
-            </Link>
-
-            {/* زر Hamburger للموبايل */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="flex lg:hidden flex-col items-center justify-center w-10 h-10 rounded-xl bg-brand-deep-teal/30 border border-brand-turquoise/20 shadow-sm focus:outline-none z-50 relative"
-              aria-label="Toggle Menu"
-            >
-              <div className="w-5 flex flex-col gap-1">
-                <span className={`h-[2px] w-full bg-brand-light-gold rounded-full transition-transform duration-300 ${isOpen ? 'rotate-45 translate-y-[6px]' : ''}`} />
-                <span className={`h-[2px] w-full bg-brand-light-gold rounded-full transition-opacity duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'}`} />
-                <span className={`h-[2px] w-full bg-brand-light-gold rounded-full transition-transform duration-300 ${isOpen ? '-rotate-45 translate-y-[6px]' : ''}`} />
-              </div>
-            </button>
-
-          </div>
+          {/* 📱 Mobile Navigation Trigger (Isolated Client Island) */}
+          <MobileNav locale={locale} items={mainNavItems} />
 
         </div>
-      </header>
 
-      {/* 📱 قائمة الموبايل المنزلقة بوضوحها الفاخر والممتد */}
-      <div 
-        className={`fixed inset-0 z-40 lg:hidden transition-all duration-500 ${
-          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        <div className="absolute inset-0 bg-brand-bg/60 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-
-        <div className={`fixed top-0 bottom-0 w-[280px] sm:w-[320px] bg-brand-bg/95 backdrop-blur-2xl shadow-[-5px_0_40px_rgba(3,15,30,0.6)] p-6 pt-28 flex flex-col justify-between transition-transform duration-500 ease-out z-50 ${
-          isAr 
-            ? (isOpen ? 'right-0' : '-right-full') 
-            : (isOpen ? 'left-0' : '-left-full')
-        } ${isAr ? 'border-l border-brand-deep-teal/30' : 'border-r border-brand-deep-teal/30'}`}>
-          
-          <div className="flex flex-col gap-4">
-            {menuItems.map((item, idx) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={idx}
-                  href={item.href}
-                  className={`text-sm sm:text-base font-black p-3 rounded-xl transition-all duration-300 ${
-                    isActive 
-                      ? 'bg-gradient-to-r from-brand-deep-gold/15 to-brand-light-gold/5 text-brand-deep-gold border-s-2 border-brand-deep-gold' 
-                      : 'text-brand-turquoise hover:bg-brand-deep-teal/20 hover:text-brand-light-gold'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </div>
-
-          <div className="pt-6 border-t border-brand-deep-teal/20 flex flex-col gap-3">
-            {/* 🌐 زر تغيير اللغة للموبايل منبثق أسفل القائمة المنزلقة لسهولة التحكم اللمسي */}
-            <Link
-              href={getLanguageSwitchUrl()}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-brand-turquoise/20 bg-brand-deep-teal/10 text-brand-light-gold transition-all duration-300 group"
-            >
-              <LanguageIcon />
-              <span className="text-xs font-black tracking-wide font-sans">
-                {isAr ? 'Switch to English' : 'التحويل إلى العربية'}
-              </span>
-            </Link>
-
-            <div className="sm:hidden">
-              <Link
-                href={`/${locale}/contact`}
-                className="w-full flex items-center justify-center py-3.5 bg-gradient-to-r from-brand-deep-gold to-brand-light-gold text-brand-bg font-black text-sm rounded-xl shadow-[0_4px_15px_rgba(197,168,107,0.3)]"
-              >
-                {isAr ? 'تواصل معنا' : 'Contact Us'}
-              </Link>
-            </div>
-          </div>
-
-        </div>
       </div>
-    </>
+    </header>
   );
 }

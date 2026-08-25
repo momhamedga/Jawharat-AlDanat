@@ -2,20 +2,187 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-bg: #030F1E;
-  --color-brand-deep-gold: #C5A86B;
-  --color-brand-light-gold: #EEDCA5;
-  --color-brand-deep-teal: #0E434D;
-  --color-brand-turquoise: #3A9FA3;
-  --color-brand-platinum: #8C867E;
+  --font-sans-ar: var(--font-cairo), 'Cairo', system-ui, -apple-system, sans-serif;
+  --font-sans-en: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Semantic OKLCH Design Tokens linked to CSS Custom Properties */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand Colors in OKLCH */
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-deep-gold: var(--brand-deep-gold);
+  --color-brand-light-gold: var(--brand-light-gold);
+  --color-brand-deep-teal: var(--brand-deep-teal);
+  --color-brand-turquoise: var(--brand-turquoise);
+  --color-brand-platinum: var(--brand-platinum);
+
+  /* Radius Tokens */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
 }
 
 :root {
+  /* ☀️ LIGHT THEME (Warm Architectural Ivory / Soft Stone / Refined Royal Gold / Charcoal) */
+  color-scheme: light;
+  --radius: 0.5rem;
+
+  --background: oklch(0.975 0.01 80);
+  --foreground: oklch(0.20 0.02 240);
+
+  --card: oklch(0.99 0.005 80);
+  --card-foreground: oklch(0.20 0.02 240);
+
+  --popover: oklch(0.99 0.005 80);
+  --popover-foreground: oklch(0.20 0.02 240);
+
+  --primary: oklch(0.54 0.13 75);
+  --primary-foreground: oklch(0.99 0.005 80);
+
+  --secondary: oklch(0.93 0.015 80);
+  --secondary-foreground: oklch(0.22 0.02 240);
+
+  --muted: oklch(0.94 0.01 80);
+  --muted-foreground: oklch(0.48 0.025 240);
+
+  --accent: oklch(0.92 0.02 80);
+  --accent-foreground: oklch(0.18 0.02 240);
+
+  --destructive: oklch(0.55 0.20 25);
+  --destructive-foreground: oklch(0.98 0.005 80);
+
+  --border: oklch(0.88 0.015 80);
+  --input: oklch(0.88 0.015 80);
+  --ring: oklch(0.54 0.13 75);
+
+  --brand-bg: oklch(0.975 0.01 80);
+  --brand-deep-gold: oklch(0.54 0.13 75);
+  --brand-light-gold: oklch(0.72 0.10 80);
+  --brand-deep-teal: oklch(0.35 0.08 215);
+  --brand-turquoise: oklch(0.50 0.10 195);
+  --brand-platinum: oklch(0.45 0.02 65);
+}
+
+.dark {
+  /* 🌙 DARK THEME (Original Pristine Sovereign Obsidian & Gold - 100% PRESERVED) */
   color-scheme: dark;
+
+  --background: oklch(0.14 0.025 240);
+  --foreground: oklch(0.98 0.005 240);
+
+  --card: oklch(0.17 0.03 240);
+  --card-foreground: oklch(0.98 0.005 240);
+
+  --popover: oklch(0.17 0.03 240);
+  --popover-foreground: oklch(0.98 0.005 240);
+
+  --primary: oklch(0.74 0.11 78);
+  --primary-foreground: oklch(0.12 0.02 240);
+
+  --secondary: oklch(0.24 0.04 220);
+  --secondary-foreground: oklch(0.98 0.005 240);
+
+  --muted: oklch(0.22 0.02 240);
+  --muted-foreground: oklch(0.70 0.015 240);
+
+  --accent: oklch(0.26 0.04 220);
+  --accent-foreground: oklch(0.98 0.005 240);
+
+  --destructive: oklch(0.58 0.22 25);
+  --destructive-foreground: oklch(0.98 0.005 240);
+
+  --border: oklch(0.28 0.025 240);
+  --input: oklch(0.28 0.025 240);
+  --ring: oklch(0.74 0.11 78);
+
+  --brand-bg: oklch(0.14 0.025 240);
+  --brand-deep-gold: oklch(0.74 0.11 78);
+  --brand-light-gold: oklch(0.89 0.08 85);
+  --brand-deep-teal: oklch(0.32 0.06 215);
+  --brand-turquoise: oklch(0.66 0.10 195);
+  --brand-platinum: oklch(0.62 0.015 65);
+}
+
+:root[lang="ar"], [dir="rtl"] {
+  font-family: var(--font-sans-ar);
+}
+
+:root[lang="en"], [dir="ltr"] {
+  font-family: var(--font-sans-en);
 }
 
 body {
-  background-color: var(--color-brand-bg);
-  color: #f8fafc;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  min-height: 100vh;
+}
+
+/* Accessibility & Focus Outline Foundation */
+:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+/* 🎨 Branded Restrained Scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-background);
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-background);
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

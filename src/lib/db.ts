@@ -7,19 +7,28 @@ if (!connectionString) {
   throw new Error('DATABASE_URL is not defined in your environment variables.');
 }
 
-// نمط الـ Singleton لمنع تكرار إنشاء الـ Pool أثناء الـ Hot Reload في التطوير
-const globalForDb = globalThis as unknown as { db: Pool | undefined };
+// Global augmentation for strict typing without any/as unknown casts
+declare global {
+  var __neon_pool__: Pool | undefined;
+}
 
-export const db = globalForDb.db ?? new Pool({ 
-  connectionString,
-  max: 10, // الحد الأقصى للاتصالات المتزامنة
-  idleTimeoutMillis: 30000 
-});
+export const db =
+  globalThis.__neon_pool__ ??
+  new Pool({
+    connectionString,
+    max: 10, // الحد الأقصى للاتصالات المتزامنة
+    idleTimeoutMillis: 30000,
+  });
 
-if (process.env.NODE_ENV !== 'production') globalForDb.db = db;
+if (process.env.NODE_ENV !== 'production') {
+  globalThis.__neon_pool__ = db;
+}
 
 // دالة مساعدة معالجة وآمنة تماماً للاستعلامات
-export async function query<T = any>(text: string, params?: any[]): Promise<T[]> {
+export async function query<T = Record<string, unknown>>(
+  text: string,
+  params?: unknown[],
+): Promise<T[]> {
   const client = await db.connect();
   try {
     const res = await client.query(text, params);
