@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
+    "postinstall": "prisma generate",
     "prisma:generate": "prisma generate",
     "bootstrap:admin": "node scripts/bootstrap-admin.mjs",
     "admin:set-password": "node scripts/set-admin-password.mjs"
